@@ -390,6 +390,21 @@ class JUser extends JObject
 				}
 			}
 		}
+		
+		
+		$result = JAccess::check($this->id, $action, $assetname);
+		
+		if (! $result)
+		{
+			JPluginHelper::importPlugin('system');
+			$dispatcher = JEventDispatcher::getInstance();
+			$res = $dispatcher->trigger('OnBeforeCheckACL', array(JFactory::getUser()->id, $action, $assetname));
+		
+			if ($res[0])
+			{
+				return true;
+			}
+		}
 
 		return $this->isRoot ? true : JAccess::check($this->id, $action, $assetname);
 	}
