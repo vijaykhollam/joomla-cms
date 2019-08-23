@@ -42,6 +42,14 @@ class TextField extends FormField
 	protected $maxLength;
 
 	/**
+	 * The allow pattern of the field.
+	 *
+	 * @var    String
+	 * @since  3.2
+	 */
+	protected $pattern;
+
+	/**
 	 * The mode of input associated with the field.
 	 *
 	 * @var    mixed
@@ -53,7 +61,7 @@ class TextField extends FormField
 	 * The name of the form field direction (ltr or rtl).
 	 *
 	 * @var    string
-	 * @since  3.2
+	 * @since  4.0.0
 	 */
 	protected $dirname;
 
@@ -95,6 +103,7 @@ class TextField extends FormField
 		switch ($name)
 		{
 			case 'maxLength':
+			case 'pattern':
 			case 'dirname':
 			case 'addonBefore':
 			case 'addonAfter':
@@ -121,6 +130,10 @@ class TextField extends FormField
 		{
 			case 'maxLength':
 				$this->maxLength = (int) $value;
+				break;
+
+			case 'pattern':
+				$this->pattern = (int) $value;
 				break;
 
 			case 'dirname':
@@ -189,6 +202,7 @@ class TextField extends FormField
 			$this->dirname = $dirname ? $this->getName($this->fieldname . '_dir') : false;
 
 			$this->maxLength = (int) $this->element['maxlength'];
+			$this->pattern   = (string) $this->element['pattern'];
 
 			$this->addonBefore = (string) $this->element['addonBefore'];
 			$this->addonAfter  = (string) $this->element['addonAfter'];
